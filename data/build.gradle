@@ -1,0 +1,23 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation project(':domain')
+
+    implementation libDependencies.kotlinStdLib
+    implementation reactiveDependencies.rxJava2
+
+    // injection
+    implementation injectionDependencies.dagger
+    kapt injectionDependencies.daggerCompiler
+
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.okHttp
+    implementation retrofitDependencies.logging
+    implementation retrofitDependencies.gsonConverter
+    implementation retrofitDependencies.adapterRxJava2
+    implementation libDependencies.options
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
