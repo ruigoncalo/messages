@@ -1,0 +1,12 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation reactiveDependencies.rxJava2
+    implementation libDependencies.kotlinStdLib
+    implementation injectionDependencies.javaxAnnotation
+    implementation injectionDependencies.javaxInject
+    implementation libDependencies.options
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
