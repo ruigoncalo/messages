@@ -1,5 +1,6 @@
 package com.ruigoncalo.domain
 
+import com.ruigoncalo.domain.model.Messages
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -8,9 +9,9 @@ import polanski.option.OptionUnsafe
 import javax.inject.Inject
 
 class GetMessagesUseCase @Inject constructor(
-        private val repository: Repository<Int, Messages>): RetrieveMessagesInteractor<Int, Messages> {
+        private val repository: Repository<String, Messages>): RetrieveMessagesInteractor<String, Messages> {
 
-    override fun retrieve(params: Int): Observable<Messages> {
+    override fun retrieve(params: String): Observable<Messages> {
         return repository.getMessages(params)
                 .flatMapSingle { fetchWhenNoneAndThenRetrieve(it) }
                 .filter(Option<Messages>::isSome)

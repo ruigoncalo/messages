@@ -4,7 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import polanski.option.Option
 
-interface Repository<in Params, Value> {
+interface Repository<Params, Value> {
 
     fun getMessages(params: Params): Observable<Option<Value>>
 
