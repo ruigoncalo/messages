@@ -26,10 +26,15 @@ dependencies {
     implementation project(':data')
 
     implementation supportDependencies.appCompatv7
+    implementation supportDependencies.recyclerView
+    implementation supportDependencies.cardView
+
     implementation libDependencies.kotlinStdLib
     implementation reactiveDependencies.rxJava2
     implementation reactiveDependencies.rxAndroid
     implementation libDependencies.options
+    implementation libDependencies.picasso
+    implementation libDependencies.circleImageView
 
     implementation injectionDependencies.javaxAnnotation
     implementation injectionDependencies.javaxInject
