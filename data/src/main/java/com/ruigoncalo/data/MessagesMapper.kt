@@ -14,15 +14,15 @@ import javax.inject.Inject
 class MessagesMapper @Inject constructor() : Mapper<MessagesRaw, Messages> {
 
     override fun map(r: MessagesRaw): Messages {
-        return Messages(
-                messages = r.messages.map { raw -> raw.toDomainModel() },
-                users = r.users.map { raw -> raw.toDomainModel() }
-        )
+        return Messages(messages = r.messages.mapNotNull { raw -> raw.toDomainModel(r.users) })
     }
 }
 
-fun MessageRaw.toDomainModel(): Message {
-    return Message(this.id, this.userId, this.content, this.attachments.map { it.toDomainModel() })
+fun MessageRaw.toDomainModel(users: List<UserRaw>): Message? {
+    return users.firstOrNull { it.id == this.userId }?.let {
+        Message(this.id, it.toDomainModel(), this.content,
+                this.attachments?.let { it.map { it.toDomainModel() } } ?: listOf())
+    }
 }
 
 fun AttachmentRaw.toDomainModel(): Attachment {
