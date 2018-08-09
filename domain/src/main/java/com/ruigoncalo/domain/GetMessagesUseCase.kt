@@ -1,6 +1,5 @@
 package com.ruigoncalo.domain
 
-import com.ruigoncalo.domain.model.Messages
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
