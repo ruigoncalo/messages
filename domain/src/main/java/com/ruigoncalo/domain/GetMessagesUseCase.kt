@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetMessagesUseCase @Inject constructor(private val repository: Repository): GetMessagesInteractor {
 
-    override fun getMessages(params: String): Observable<Messages> {
+    override fun getMessages(): Observable<Messages> {
         return repository.getMessages()
                 .flatMapSingle { fetchWhenNoneAndThenRetrieve(it) }
                 .filter(Option<Messages>::isSome)

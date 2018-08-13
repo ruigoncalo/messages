@@ -36,7 +36,7 @@ class MessagesViewModel @Inject constructor(
 
     private fun retrieveMessages() {
         disposables.add(
-                getMessagesInteractor.getMessages("")
+                getMessagesInteractor.getMessages()
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext { messagesLiveData.value = ViewResource.loading() }
                         .observeOn(Schedulers.computation())

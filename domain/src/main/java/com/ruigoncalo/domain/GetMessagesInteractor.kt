@@ -5,5 +5,5 @@ import io.reactivex.Observable
 
 interface GetMessagesInteractor {
 
-    fun getMessages(params: String): Observable<Messages>
+    fun getMessages(): Observable<Messages>
 }
