@@ -94,19 +94,19 @@ class MessagesActivity : AppCompatActivity(), ItemLongClickListener {
         }
     }
 
-    override fun onAttachmentLongPress(position: Int, attachment: AttachmentViewEntity) {
-        showDeleteAttachmentView(position, attachment)
+    override fun onAttachmentLongPress(attachment: AttachmentViewEntity) {
+        showDeleteAttachmentView(attachment)
     }
 
-    override fun onMessageLongPress(position: Int, message: MessageViewEntity) {
-        showDeleteMessageView(position, message)
+    override fun onMessageLongPress(message: MessageViewEntity) {
+        showDeleteMessageView(message)
     }
 
     private fun showMessages(messages: MessagesViewEntity) {
         messagesAdapter.updateMessages(messages)
     }
 
-    private fun showDeleteMessageView(position: Int, message: MessageViewEntity) {
+    private fun showDeleteMessageView(message: MessageViewEntity) {
         showActionView("Delete message?")
 
         actionButton.setOnClickListener {
@@ -115,7 +115,7 @@ class MessagesActivity : AppCompatActivity(), ItemLongClickListener {
         }
     }
 
-    private fun showDeleteAttachmentView(position: Int, attachment: AttachmentViewEntity) {
+    private fun showDeleteAttachmentView(attachment: AttachmentViewEntity) {
         showActionView("Delete attachment?")
 
         actionButton.setOnClickListener {

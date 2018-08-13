@@ -34,7 +34,7 @@ class GenericItemView(private val view: View,
         contentView.text = message.content
 
         view.setOnLongClickListener {
-            listener.onMessageLongPress(adapterPosition, message)
+            listener.onMessageLongPress(message)
             true
         }
     }
@@ -47,7 +47,7 @@ class GenericItemView(private val view: View,
         contentView.text = message.content
 
         view.setOnLongClickListener {
-            listener.onMessageLongPress(adapterPosition, message)
+            listener.onMessageLongPress(message)
             true
         }
     }
@@ -60,7 +60,7 @@ class GenericItemView(private val view: View,
         textView.text = attachment.title
 
         view.setOnLongClickListener {
-            listener.onAttachmentLongPress(adapterPosition, attachment)
+            listener.onAttachmentLongPress(attachment)
             true
         }
     }

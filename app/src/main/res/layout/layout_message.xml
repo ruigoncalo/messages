@@ -14,9 +14,9 @@
         tools:src="@drawable/ic_launcher_background"/>
 
     <LinearLayout
-        android:layout_width="210dp"
+        android:layout_width="194dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/background_message"
         android:orientation="vertical"
         android:padding="8dp">
@@ -25,7 +25,7 @@
             android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:textStyle="bold"
             tools:text="Name"/>
 

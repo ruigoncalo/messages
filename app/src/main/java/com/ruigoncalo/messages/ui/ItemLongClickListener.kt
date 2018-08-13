@@ -5,7 +5,7 @@ import com.ruigoncalo.messages.presentation.model.MessageViewEntity
 
 interface ItemLongClickListener {
 
-    fun onMessageLongPress(position: Int, message: MessageViewEntity)
+    fun onMessageLongPress(message: MessageViewEntity)
 
-    fun onAttachmentLongPress(position: Int, attachment: AttachmentViewEntity)
+    fun onAttachmentLongPress(attachment: AttachmentViewEntity)
 }
