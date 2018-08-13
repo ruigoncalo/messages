@@ -2,6 +2,7 @@ package com.ruigoncalo.messages.presentation
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.ruigoncalo.domain.DeleteMessageInteractor
 import com.ruigoncalo.domain.GetMessagesInteractor
 import com.ruigoncalo.domain.Mapper
 import com.ruigoncalo.domain.model.Messages
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 class MessagesViewModel @Inject constructor(
         private val getMessagesInteractor: GetMessagesInteractor,
+        private val deleteMessageInteractor: DeleteMessageInteractor,
         private val mapper: Mapper<Messages, MessagesViewEntity>) : ViewModel() {
 
     private val disposables = CompositeDisposable()
@@ -43,6 +45,13 @@ class MessagesViewModel @Inject constructor(
         )
     }
 
+    private fun deleteMessage(messageId: Long) {
+        disposables.add(
+                deleteMessageInteractor.deleteMessage(messageId)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe()
+        )
+    }
 
     override fun onCleared() {
         super.onCleared()

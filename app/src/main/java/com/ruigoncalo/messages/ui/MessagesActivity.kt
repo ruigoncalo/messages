@@ -73,7 +73,9 @@ class MessagesActivity : AppCompatActivity() {
 
     private fun setupViews() {
         with(messagesView) {
-            adapter = messagesAdapter
+            adapter = messagesAdapter.apply {
+                setHasStableIds(true)
+            }
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = RecyclerView.VERTICAL
             }
