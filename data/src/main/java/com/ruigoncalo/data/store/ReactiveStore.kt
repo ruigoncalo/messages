@@ -26,6 +26,13 @@ class ReactiveStore @Inject constructor(private val cache: Cache,
                             BiFunction<List<MessageCached>, List<UserCached>, MessagesCached> { messages, users ->
                                 MessagesCached(messages, users)
                             })
+                    .flatMap {
+                        if (it.messages.isEmpty() || it.users.isEmpty()) {
+                            Observable.error(Exception("Empty values"))
+                        } else {
+                            Observable.just(it)
+                        }
+                    }
                     .map(domainMapper::map)
                     .map { Option.ofObj(it) }
         }
@@ -44,12 +51,16 @@ class ReactiveStore @Inject constructor(private val cache: Cache,
     override fun deleteMessage(messageId: Long): Completable {
         return Completable.fromCallable {
             cache.deleteMessage(messageId)
+            val messages = MessagesCached(cache.getMessages(), cache.getUsers())
+            subject.onNext(Option.ofObj(domainMapper.map(messages)))
         }
     }
 
     override fun updateAttachment(messageId: Long, attachments: List<AttachmentCached>): Completable {
         return Completable.fromCallable {
             cache.updateAttachments(messageId, attachments)
+            val messages = MessagesCached(cache.getMessages(), cache.getUsers())
+            subject.onNext(Option.ofObj(domainMapper.map(messages)))
         }
     }
 
