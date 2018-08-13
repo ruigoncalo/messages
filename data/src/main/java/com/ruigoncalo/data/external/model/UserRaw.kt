@@ -1,4 +1,4 @@
-package com.ruigoncalo.data.model
+package com.ruigoncalo.data.external.model
 
 data class UserRaw(val id: Long,
                    val name: String,

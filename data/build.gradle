@@ -37,4 +37,8 @@ dependencies {
 
     implementation libDependencies.options
     implementation libDependencies.gson
+
+    implementation cacheDependencies.roomRuntime
+    implementation cacheDependencies.roomRxJava
+    kapt cacheDependencies.roomCompiler
 }

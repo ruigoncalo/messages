@@ -1,8 +1,22 @@
 package com.ruigoncalo.data.cache
 
-interface Cache<Key, Value> {
+import com.ruigoncalo.data.cache.model.AttachmentCached
+import com.ruigoncalo.data.cache.model.MessageCached
+import com.ruigoncalo.data.cache.model.UserCached
 
-    fun get(key: Key): Value
+interface Cache {
 
-    fun put(key: Key, value: Value)
+    fun saveMessages(messages: List<MessageCached>)
+
+    fun saveUsers(users: List<UserCached>)
+
+    fun getUser(userId: Long): UserCached
+
+    fun getUsers(): List<UserCached>
+
+    fun getMessages(): List<MessageCached>
+
+    fun deleteMessage(messageId: Long)
+
+    fun updateAttachments(messageId: Long, attachments: List<AttachmentCached>)
 }

@@ -1,13 +1,17 @@
 package com.ruigoncalo.messages.injection
 
+import android.app.Application
 import android.content.Context
-import com.ruigoncalo.data.MessagesMapper
+import com.ruigoncalo.data.DomainMapper
 import com.ruigoncalo.data.MessagesRepository
+import com.ruigoncalo.data.StoreMapper
 import com.ruigoncalo.data.cache.Cache
-import com.ruigoncalo.data.cache.MemoryCache
+import com.ruigoncalo.data.cache.MessagesCache
+import com.ruigoncalo.data.cache.MessagesDatabase
+import com.ruigoncalo.data.cache.model.MessagesCached
 import com.ruigoncalo.data.external.LocalJsonParser
 import com.ruigoncalo.data.external.Parser
-import com.ruigoncalo.data.model.MessagesRaw
+import com.ruigoncalo.data.external.model.MessagesRaw
 import com.ruigoncalo.data.store.ReactiveStore
 import com.ruigoncalo.data.store.Store
 import com.ruigoncalo.domain.Mapper
@@ -21,14 +25,19 @@ import javax.inject.Singleton
 class DataModule {
 
     @Provides
-    @Singleton
-    fun providesCache(): Cache<String, Messages> {
-        return MemoryCache()
+    fun providesDatabase(application: Application): MessagesDatabase {
+        return MessagesDatabase.getInstance(application)
     }
 
     @Provides
-    fun providesStore(cache: Cache<String, Messages>): Store<String, Messages> {
-        return ReactiveStore(cache)
+    @Singleton
+    fun providesCache(database: MessagesDatabase): Cache {
+        return MessagesCache(database)
+    }
+
+    @Provides
+    fun providesStore(cache: Cache, mapper: Mapper<MessagesCached, Messages>): Store {
+        return ReactiveStore(cache, mapper)
     }
 
     @Provides
@@ -37,15 +46,20 @@ class DataModule {
     }
 
     @Provides
-    fun providesMapper(): Mapper<MessagesRaw, Messages> {
-        return MessagesMapper()
+    fun providesStoreMapper(): Mapper<MessagesRaw, MessagesCached> {
+        return StoreMapper()
+    }
+
+    @Provides
+    fun providesDomainMapper(): Mapper<MessagesCached, Messages> {
+        return DomainMapper()
     }
 
     @Provides
     @Singleton
     fun providesRepository(parser: Parser,
-                           store: Store<String, Messages>,
-                           mapper: Mapper<MessagesRaw, Messages>): Repository<String, Messages> {
+                           store: Store,
+                           mapper: Mapper<MessagesRaw, MessagesCached>): Repository {
         return MessagesRepository(parser, store, mapper)
     }
 }

@@ -4,9 +4,8 @@ import com.ruigoncalo.domain.DeleteAttachmentInteractor
 import com.ruigoncalo.domain.DeleteAttachmentUseCase
 import com.ruigoncalo.domain.DeleteMessageInteractor
 import com.ruigoncalo.domain.DeleteMessageUseCase
+import com.ruigoncalo.domain.GetMessagesInteractor
 import com.ruigoncalo.domain.GetMessagesUseCase
-import com.ruigoncalo.domain.RetrieveMessagesInteractor
-import com.ruigoncalo.domain.model.Messages
 import dagger.Binds
 import dagger.Module
 
@@ -14,27 +13,11 @@ import dagger.Module
 abstract class DomainModule {
 
     @Binds
-    abstract fun bindsRetrieveMessagesInteractor(getMessagesUseCase: GetMessagesUseCase): RetrieveMessagesInteractor<String, Messages>
+    abstract fun bindsRetrieveMessagesInteractor(getMessagesUseCase: GetMessagesUseCase): GetMessagesInteractor
 
     @Binds
-    abstract fun bindsDeleteMessageInteractor(deleteMessageUseCase: DeleteMessageUseCase): DeleteMessageInteractor<String>
+    abstract fun bindsDeleteMessageInteractor(deleteMessageUseCase: DeleteMessageUseCase): DeleteMessageInteractor
 
     @Binds
-    abstract fun bindsDeleteAttachmentInteractor(deleteAttachmentUseCase: DeleteAttachmentUseCase): DeleteAttachmentInteractor<String>
-
-   /* @Provides
-    fun provideRetrieveMessagesInteractor(repository: Repository<String, Messages>): RetrieveMessagesInteractor<String, Messages> {
-        return GetMessagesUseCase(repository)
-    }
-
-    @Provides
-    fun provideDeleteMessageInteractor(repository: Repository<String, Messages>): DeleteMessageInteractor<String> {
-        return DeleteMessageUseCase(repository)
-    }
-
-    @Provides
-    fun provideDeleteAttachmentInteractor(repository: Repository<String, Messages>): DeleteAttachmentInteractor<String> {
-        return DeleteAttachmentUseCase(repository)
-    }*/
-
+    abstract fun bindsDeleteAttachmentInteractor(deleteAttachmentUseCase: DeleteAttachmentUseCase): DeleteAttachmentInteractor
 }

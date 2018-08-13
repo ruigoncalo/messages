@@ -1,13 +1,11 @@
 package com.ruigoncalo.domain
 
-import com.ruigoncalo.domain.model.Messages
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class DeleteMessageUseCase @Inject constructor(
-        private val repository: Repository<String, Messages>) : DeleteMessageInteractor<String> {
+class DeleteMessageUseCase @Inject constructor(private val repository: Repository) : DeleteMessageInteractor {
 
-    override fun deleteMessage(params: String): Completable {
-        return repository.deleteMessage(params)
+    override fun deleteMessage(messageId: Long): Completable {
+        return repository.deleteMessage(messageId)
     }
 }

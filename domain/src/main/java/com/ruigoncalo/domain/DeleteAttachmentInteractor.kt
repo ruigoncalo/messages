@@ -1,8 +1,9 @@
 package com.ruigoncalo.domain
 
+import com.ruigoncalo.domain.model.Attachment
 import io.reactivex.Completable
 
-interface DeleteAttachmentInteractor<Params> {
+interface DeleteAttachmentInteractor {
 
-    fun deleteAttachment(params: Params): Completable
+    fun deleteAttachment(messageId: Long, attachments: List<Attachment>): Completable
 }

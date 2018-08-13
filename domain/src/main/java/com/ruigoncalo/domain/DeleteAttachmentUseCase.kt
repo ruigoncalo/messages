@@ -1,13 +1,12 @@
 package com.ruigoncalo.domain
 
-import com.ruigoncalo.domain.model.Messages
+import com.ruigoncalo.domain.model.Attachment
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class DeleteAttachmentUseCase @Inject constructor(
-        private val repository: Repository<String, Messages>) : DeleteAttachmentInteractor<String> {
+class DeleteAttachmentUseCase @Inject constructor(private val repository: Repository) : DeleteAttachmentInteractor {
 
-    override fun deleteAttachment(params: String): Completable {
-        return repository.deleteAttachment(params)
+    override fun deleteAttachment(messageId: Long, attachments: List<Attachment>): Completable {
+        return repository.updateAttachment(messageId, attachments)
     }
 }

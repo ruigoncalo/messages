@@ -2,7 +2,7 @@ package com.ruigoncalo.data.external
 
 import android.content.Context
 import com.google.gson.Gson
-import com.ruigoncalo.data.model.MessagesRaw
+import com.ruigoncalo.data.external.model.MessagesRaw
 import io.reactivex.Single
 import javax.inject.Inject
 

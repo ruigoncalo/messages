@@ -1,16 +1,18 @@
 package com.ruigoncalo.domain
 
+import com.ruigoncalo.domain.model.Attachment
+import com.ruigoncalo.domain.model.Messages
 import io.reactivex.Completable
 import io.reactivex.Observable
 import polanski.option.Option
 
-interface Repository<Params, Value> {
+interface Repository {
 
-    fun getMessages(params: Params): Observable<Option<Value>>
+    fun getMessages(): Observable<Option<Messages>>
 
     fun fetchMessages(): Completable
 
-    fun deleteMessage(params: Params): Completable
+    fun deleteMessage(messageId: Long): Completable
 
-    fun deleteAttachment(params: Params): Completable
+    fun updateAttachment(messageId: Long, attachments: List<Attachment>): Completable
 }

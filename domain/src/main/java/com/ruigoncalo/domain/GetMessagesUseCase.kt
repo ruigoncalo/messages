@@ -8,11 +8,10 @@ import polanski.option.Option
 import polanski.option.OptionUnsafe
 import javax.inject.Inject
 
-class GetMessagesUseCase @Inject constructor(
-        private val repository: Repository<String, Messages>): RetrieveMessagesInteractor<String, Messages> {
+class GetMessagesUseCase @Inject constructor(private val repository: Repository): GetMessagesInteractor {
 
-    override fun retrieve(params: String): Observable<Messages> {
-        return repository.getMessages(params)
+    override fun getMessages(params: String): Observable<Messages> {
+        return repository.getMessages()
                 .flatMapSingle { fetchWhenNoneAndThenRetrieve(it) }
                 .filter(Option<Messages>::isSome)
                 .map { OptionUnsafe.getUnsafe(it) }
