@@ -11,7 +11,8 @@ import com.ruigoncalo.messages.presentation.model.ItemEntity
 import com.ruigoncalo.messages.presentation.model.ItemType
 import com.ruigoncalo.messages.presentation.model.MessageViewEntity
 
-class GenericItemView(private val view: View) : RecyclerView.ViewHolder(view) {
+class GenericItemView(private val view: View,
+                      private val listener: ItemLongClickListener) : RecyclerView.ViewHolder(view) {
 
     fun bind(entity: ItemEntity) {
         when (entity.getItemType()) {
@@ -31,6 +32,11 @@ class GenericItemView(private val view: View) : RecyclerView.ViewHolder(view) {
                 ContextCompat.getDrawable(view.context, R.drawable.ic_face))
         nameView.text = message.user.name
         contentView.text = message.content
+
+        view.setOnLongClickListener {
+            listener.onMessageLongPress(adapterPosition, message)
+            true
+        }
     }
 
     private fun bindMessageMe(message: MessageViewEntity) {
@@ -39,6 +45,11 @@ class GenericItemView(private val view: View) : RecyclerView.ViewHolder(view) {
 
         nameView.text = "Me"
         contentView.text = message.content
+
+        view.setOnLongClickListener {
+            listener.onMessageLongPress(adapterPosition, message)
+            true
+        }
     }
 
     private fun bindAttachment(attachment: AttachmentViewEntity) {
@@ -47,5 +58,10 @@ class GenericItemView(private val view: View) : RecyclerView.ViewHolder(view) {
 
         imageView.loadImage(attachment.url, null, null)
         textView.text = attachment.title
+
+        view.setOnLongClickListener {
+            listener.onAttachmentLongPress(adapterPosition, attachment)
+            true
+        }
     }
 }

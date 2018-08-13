@@ -1,6 +1,7 @@
 package com.ruigoncalo.messages.ui
 
 import android.content.Context
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import com.ruigoncalo.messages.presentation.model.ItemEntity
 import com.ruigoncalo.messages.presentation.model.ItemType
 import com.ruigoncalo.messages.presentation.model.MessagesViewEntity
 
-class MessagesAdapter(private val context: Context) : RecyclerView.Adapter<GenericItemView>() {
+class MessagesAdapter(private val context: Context,
+                      private val listener: ItemLongClickListener) : RecyclerView.Adapter<GenericItemView>() {
 
     companion object {
         const val TYPE_MESSAGE = 0
@@ -36,7 +38,7 @@ class MessagesAdapter(private val context: Context) : RecyclerView.Adapter<Gener
     }
 
     override fun getItemId(position: Int): Long {
-        return messages[position].getItemType().id
+        return messages[position].getItemId()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericItemView {
@@ -47,15 +49,17 @@ class MessagesAdapter(private val context: Context) : RecyclerView.Adapter<Gener
             else -> inflater.inflate(R.layout.layout_attachment_me, parent, false)
         }
 
-        return GenericItemView(view)
+        return GenericItemView(view, listener)
     }
 
     override fun onBindViewHolder(holder: GenericItemView, position: Int) {
         holder.bind(messages[position])
     }
 
-    fun addMessages(messagesViewEntity: MessagesViewEntity) {
-        this.messages.addAll(messagesViewEntity.messages)
-        notifyDataSetChanged()
+    fun updateMessages(messagesViewEntity: MessagesViewEntity) {
+        val diffResults = DiffUtil.calculateDiff(MessagesDiffUtils(this.messages, messagesViewEntity.messages))
+        messages.clear()
+        messages.addAll(messagesViewEntity.messages)
+        diffResults.dispatchUpdatesTo(this)
     }
 }

@@ -32,3 +32,7 @@ fun AttachmentCached.toDomain(): Attachment {
 fun UserCached.toDomain(): User {
     return User(this.id, this.name, this.avatarId)
 }
+
+fun Attachment.toCacheModel(): AttachmentCached {
+    return AttachmentCached(this.id, this.title, this.url, this.thumbnailUrl)
+}

@@ -20,7 +20,7 @@ class MessagesViewEntityMapper @Inject constructor() : Mapper<Messages, Messages
             items.add(message.toViewEntity())
 
             message.attachments.forEach { attachment ->
-                items.add(attachment.toViewEntity(message))
+                items.add(attachment.toViewEntity(message.user.id, message.id))
             }
         }
 
@@ -29,13 +29,20 @@ class MessagesViewEntityMapper @Inject constructor() : Mapper<Messages, Messages
 }
 
 fun Message.toViewEntity(): MessageViewEntity {
-    return MessageViewEntity(this.id, this.user.toViewEntity(), this.content)
+    return MessageViewEntity(this.id, this.user.toViewEntity(), this.content,
+            this.attachments.map {
+                it.toViewEntity(this.user.id, this.id)
+            })
 }
 
-fun Attachment.toViewEntity(message: Message): AttachmentViewEntity {
-    return AttachmentViewEntity(this.id, message.toViewEntity(), this.title, this.url, this.thumbnailUrl)
+fun Attachment.toViewEntity(userId: Long, messageId: Long): AttachmentViewEntity {
+    return AttachmentViewEntity(this.id, userId, messageId, this.title, this.url, this.thumbnailUrl)
 }
 
 fun User.toViewEntity(): UserViewEntity {
     return UserViewEntity(this.id, this.name, this.avatarId)
+}
+
+fun AttachmentViewEntity.toDomainModel(): Attachment {
+    return Attachment(this.id, this.title, this.url, this.thumbnailUrl)
 }

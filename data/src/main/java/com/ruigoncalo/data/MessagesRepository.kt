@@ -36,6 +36,6 @@ class MessagesRepository @Inject constructor(
     }
 
     override fun updateAttachment(messageId: Long, attachments: List<Attachment>): Completable {
-        return Completable.complete()
+        return store.updateAttachment(messageId, attachments.map { it.toCacheModel() })
     }
 }
